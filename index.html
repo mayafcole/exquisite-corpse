@@ -2,24 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Swipe & Draw Exquisite Corpse</title>
-  <link rel="stylesheet" href="/styling/styles.css">
+  <title> Dartmouth Libraries' Exquisite Corpse</title>
+  <link rel="stylesheet" href="/exquisite-corpse/css/styles.css">
+  
 
 </head>
 <body>
-
-  <h2>Choose your head & draw!</h2>
-
+  <h2 style="margin-left: 20px; margin-top: 10px;">Choose your head!</h2>
   <div id="container">
-    <div id="swipe-area">
-      <img src="heads/head1.jpg" alt="Head 1" />
-      <img src="heads/head2.jpg" alt="Head 2" />
-      <img src="heads/head3.jpg" alt="Head 3" />
+    <div id="image-display">
+      <button class="nav-arrow" id="left-arrow" aria-label="Previous">&#x276E;</button>
+      <img id="head-img" src="gallery/head/head1.jpg" alt="Head option" />
+      <button class="nav-arrow" id="right-arrow" aria-label="Next">&#x276F;</button>
     </div>
-    <canvas id="draw-canvas" width="300" height="200"></canvas>
-  </div>
 
-  <div id="buttons">
-    <button id="clear-btn">Clear Drawing</button>
+    <div id="drawing-area">
+      <!-- Black area, you can overlay canvas here for drawing -->
+      
+      <div id="timer-container">
+        Time left:
+        <span id="timer">00:60</span>
+      </div>
+
+      <button id="next-btn" disabled>Next</button>
+    </div>
   </div>
-</body>
+    <script src="script.js"></script>
+
+  </body>
+  </html>
+
+

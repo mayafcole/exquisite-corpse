@@ -1,66 +1,116 @@
-body {
-      font-family: Arial, sans-serif;
-      max-width: 320px;
-      margin: 20px auto;
-      user-select: none;
-    }
-    h2 {
-      text-align: center;
-    }
-    #container {
-      position: relative;
-      width: 300px;
-      height: 200px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-      touch-action: none; /* help with touch drawing */
-    }
-    #swipe-area {
-      overflow-x: auto;
-      overflow-y: hidden;
-      white-space: nowrap;
-      width: 300px;
-      height: 200px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-    }
-    #swipe-area::-webkit-scrollbar {
-      display: none; 
-    }
-    #swipe-area img {
-      width: 300px;
-      height: 200px;
-      object-fit: contain;
-      display: inline-block;
-      scroll-snap-align: center;
-      pointer-events: none; /* prevent conflicts with canvas drawing */
-      user-select: none;
-    }
-    #draw-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 300px;
-      height: 200px;
-      touch-action: none;
-      cursor: crosshair;
-      background: transparent;
-    }
-    #buttons {
+    body {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center; 
+      height: 100vh;          
+      margin: 0;        
+      font-family: Arial, sans-serif;
+      user-select: none;
+      background: #fff;
+      color: #000;
     }
-    button {
-      padding: 8px 16px;
-      font-size: 16px;
-      border-radius: 5px;
+    
+    h2 {
+      margin: 0 0 10px 10px;
+      font-weight: normal;
+      font-size: 1.25em;
+    }
+
+  #container {
+  position: relative;
+  width: 1440px;
+  height: 1000px;
+  margin: 20px auto;
+  user-select: none;
+}
+#image-display {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+}
+#image-display img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+#drawing-area {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  background: black;
+}
+#draw-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* match container width */
+  /* match drawing area height */
+  width: 1440px;
+  height: 1000px;
+  cursor: crosshair;
+  background: transparent;
+}
+
+     /* Left/right arrow buttons */
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
       border: none;
+      font-size: 2em;
       cursor: pointer;
-      background: #4caf50;
+      user-select: none;
+      color: #333;
+      padding: 5px 10px;
+      transition: color 0.3s;
+      z-index: 10;
+    }
+    .nav-arrow:hover {
+      color: #007BFF;
+    }
+    #left-arrow {
+      left: 0;
+    }
+    #right-arrow {
+      right: 0;
+    }
+
+ 
+
+    /* Timer */
+    #timer-container {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
       color: white;
+      font-size: 1.4em;
+      font-family: monospace, monospace;
       user-select: none;
     }
-    button:disabled {
-      background: #888;
+
+    /* Next button */
+    #next-btn {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background-color: #8bc34a;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 22px;
+      color: white;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    #next-btn:hover:not(:disabled) {
+      background-color: #689f38;
+    }
+    #next-btn:disabled {
+      background-color: #555;
       cursor: not-allowed;
     }
