@@ -9,7 +9,7 @@
       background: #fff;
       color: #000;
     }
-    
+
     h2 {
       margin: 0 0 10px 10px;
       font-weight: normal;
@@ -45,8 +45,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  /* match container width */
-  /* match drawing area height */
+  /* match container width with drawing area height */
   width: 1440px;
   height: 1000px;
   cursor: crosshair;
@@ -63,7 +62,7 @@
       font-size: 2em;
       cursor: pointer;
       user-select: none;
-      color: #333;
+      color: #fff;
       padding: 5px 10px;
       transition: color 0.3s;
       z-index: 10;
