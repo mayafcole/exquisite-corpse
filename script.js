@@ -1,131 +1,132 @@
-// Define steps and their images
-const steps = [
-  {
-    key: 'head',
-    title: 'Choose your head!',
-    images: [
-      'gallery/head/head1.jpg',
-      'gallery/head/head2.jpg',
-      'gallery/head/head3.jpg'
-    ]
-  },
-  {
-    key: 'mid',
-    title: 'Choose your midsection!',
-    images: [
-      'gallery/body/body1.jpg',
-      'gallery/body/body2.jpg',
-      'gallery/body/body3.jpg'
-    ]
-  },
-  {
-    key: 'feet',
-    title: 'Choose your feet!',
-    images: [
-      'gallery/legs/legs1.jpg',
-      'gallery/legs/legs2.jpg',
-      'gallery/legs/legs3.jpg'
-    ]
-  }
-];
+const images = {
+  head: [
+    'gallery/head/head1.jpg',
+    'gallery/head/head2.jpg',
+    'gallery/head/head3.jpg'
+  ],
+  mid: [
+    'gallery/body/body1.png',
+    'gallery/body/body2.png',
+    'gallery/body/body3.png'
+  ],
+  feet: [
+    'gallery/legs/legs1.png',
+    'gallery/legs/legs2.png',
+    'gallery/legs/legs.png'
+  ]
+};
 
-const headImg = document.getElementById('head-img');
-const leftArrow = document.getElementById('left-arrow');
-const rightArrow = document.getElementById('right-arrow');
-const nextBtn = document.getElementById('next-btn');
-const timerEl = document.getElementById('timer');
-const titleEl = document.querySelector('h2');
+const selections = {
+  head: 0,
+  mid: 0,
+  feet: 0
+};
 
-let currentStepIndex = 0;
-let currentIndex = 0;
-let selections = {};    // to save user's selections keyed by step.key
-let timeLeft = 60;
-let timerInterval = null;
-let selectionMade = false;
+let activePart = 'head';
 
-function updateImage() {
-  const images = steps[currentStepIndex].images;
-  headImg.src = images[currentIndex];
-  selectionMade = true;
-  nextBtn.disabled = false;
+function drawFinalComposite() {
+  const canvas = document.getElementById('final-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Clear previous
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const partKeys = ['head', 'mid', 'feet'];
+  const imgHeight = canvas.height / 3;
+
+  const loadImagesPromises = partKeys.map((part, index) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous'; // if images are from external source, else can remove
+      img.onload = () => {
+        // Draw image into its third of canvas height, scaled width-wise proportionally
+        let drawHeight = imgHeight;
+        let drawWidth = (img.width / img.height) * drawHeight;
+        const xOffset = (canvas.width - drawWidth) / 2; // center horizontally
+
+        ctx.drawImage(img, xOffset, index * imgHeight, drawWidth, drawHeight);
+        resolve();
+      };
+      img.onerror = reject;
+      img.src = images[part][selections[part]];
+    });
+  });
+
+  return Promise.all(loadImagesPromises);
 }
 
-function loadStep(stepIdx) {
-  // Clear old timer
-  if (timerInterval) clearInterval(timerInterval);
-
-  currentStepIndex = stepIdx;
-  currentIndex = 0;
-  selectionMade = false;
-  nextBtn.disabled = true;
-  timeLeft = 60;
-
-  // Update title
-  titleEl.textContent = steps[stepIdx].title;
-
-  // Update image
-  updateImage();
-
-  startTimer();
+// Update image for a given part
+function updateImage(part) {
+  const imgElement = document.getElementById(`${part}-img`);
+  imgElement.src = images[part][selections[part]];
+  checkFinishReady();
 }
 
-leftArrow.addEventListener('click', () => {
-  const images = steps[currentStepIndex].images;
-  if (currentIndex === 0) currentIndex = images.length - 1;
-  else currentIndex--;
-  updateImage();
-});
+// Enable finish button only if all parts are selected
+function checkFinishReady() {
+  const ready = ['head','mid','feet'].every(part => selections[part] !== null && selections[part] !== undefined);
+  const finishBtn = document.getElementById('finish-btn');
+  finishBtn.disabled = !ready;
+}
 
-rightArrow.addEventListener('click', () => {
-  const images = steps[currentStepIndex].images;
-  if (currentIndex === images.length - 1) currentIndex = 0;
-  else currentIndex++;
-  updateImage();
-});
-
-nextBtn.addEventListener('click', () => {
-  if (!selectionMade) {
-    alert('Please select an option before proceeding.');
-    return;
-  }
-
-  // Save selection for current step
-  selections[steps[currentStepIndex].key] = steps[currentStepIndex].images[currentIndex];
-
-  if (currentStepIndex + 1 < steps.length) {
-    loadStep(currentStepIndex + 1);
-  } else {
-    // All steps done; do something with selections (e.g., show summary, save, etc.)
-    clearInterval(timerInterval);
-    alert('All done! Your selections: ' + JSON.stringify(selections, null, 2));
-    nextBtn.disabled = true;
-  }
-});
-
-function startTimer() {
-  timerEl.textContent = formatTime(timeLeft);
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    timerEl.textContent = formatTime(timeLeft);
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      nextBtn.disabled = !selectionMade;
-
-      if (!selectionMade) {
-        // Auto select current image
-        selectionMade = true;
-        nextBtn.disabled = false;
-      }
-      alert("Time's up! Please proceed.");
+// Black out other parts except the active one
+function updateHighlight(activePartParam) {
+  activePart = activePartParam;
+  ['head', 'mid', 'feet'].forEach(part => {
+    const section = document.getElementById(`${part}-section`);
+    if (!section) return;
+    if (part === activePart) {
+      section.classList.remove('blacked-out');
+    } else {
+      section.classList.add('blacked-out');
     }
-  }, 1000);
+  });
 }
 
-function formatTime(seconds) {
-  const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-  const s = (seconds % 60).toString().padStart(2, '0');
-  return `${m}:${s}`;
-}
+// Make arrow buttons change images, activate section on click
+document.querySelectorAll('.nav-arrow').forEach(button => {
+  button.addEventListener('click', () => {
+    const part = button.dataset.part;
+    const isLeft = button.classList.contains('left-arrow');
+    const len = images[part].length;
+    if (isLeft) {
+      selections[part] = (selections[part] - 1 + len) % len;
+    } else {
+      selections[part] = (selections[part] + 1) % len;
+    }
+    updateImage(part);
+    updateHighlight(part);
+  });
+});
 
-// Initialize app on page load
-loadStep(0);
+// Activate section if user clicks anywhere on it
+['head','mid','feet'].forEach(part => {
+  const section = document.getElementById(`${part}-section`);
+  section.addEventListener('click', () => {
+    updateHighlight(part);
+  });
+});
+
+// Finish button click handler
+document.getElementById('finish-btn').addEventListener('click', () => {
+  const container = document.getElementById('container');
+  const finishBtn = document.getElementById('finish-btn');
+  const finalCanvas = document.getElementById('final-canvas');
+
+  // Hide selection sections and finish button
+  ['head-section', 'mid-section', 'feet-section'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  finishBtn.style.display = 'none';
+
+  // Show the final canvas
+  finalCanvas.style.display = 'block';
+
+  drawFinalComposite().catch(() => {
+    alert('Error loading images');
+  });
+});
+
+// Initialize UI
+['head','mid','feet'].forEach(updateImage);
+updateHighlight('head');

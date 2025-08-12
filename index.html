@@ -2,34 +2,150 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title> Dartmouth Libraries' Exquisite Corpse</title>
-  <link rel="stylesheet" href="/exquisite-corpse/css/styles.css">
-  
+  <title>Exquisite Corpse - Full Figure</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: white;
+      user-select: none;
+    }
 
+    #container {
+      width: 320px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .part-section {
+      text-align: center;
+      margin-bottom: 15px;
+      position: relative;
+      background: #f7f7f7;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      height: 180px;
+      transition: filter 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .part-section h3 {
+      margin: 8px 0;
+      font-weight: normal;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .image-display {
+      position: relative;
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-display img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      font-size: 2em;
+      cursor: pointer;
+      color: #333;
+      padding: 0 10px;
+      user-select: none;
+      user-drag: none;
+      z-index: 10;
+      line-height: 1;
+      pointer-events: auto; /* always clickable */
+    }
+
+    .nav-arrow:hover {
+      color: #007BFF;
+    }
+
+    .left-arrow {
+      left: 0;
+    }
+
+    .right-arrow {
+      right: 0;
+    }
+
+    #finish-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 1.2em;
+      background: #8bc34a;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      user-select: none;
+    }
+
+    #finish-btn:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    /* Blackout effect only dims images, keeps arrows clickable */
+    .blacked-out img {
+      filter: brightness(0) opacity(0.3);
+      user-select: none;
+      transition: filter 0.3s ease;
+    }
+  </style>
 </head>
 <body>
-  <h2 style="margin-left: 20px; margin-top: 10px;">Choose your head!</h2>
+
   <div id="container">
-    <div id="image-display">
-      <button class="nav-arrow" id="left-arrow" aria-label="Previous">&#x276E;</button>
-      <img id="head-img" src="gallery/head/head1.jpg" alt="Head option" />
-      <button class="nav-arrow" id="right-arrow" aria-label="Next">&#x276F;</button>
-    </div>
 
-    <div id="drawing-area">
-      <!-- Black area can overlay canvas here for drawing -->
-      
-      <div id="timer-container">
-        Time left:
-        <span id="timer">00:60</span>
+    <section class="part-section" id="head-section">
+      <h3>Head</h3>
+      <div class="image-display">
+        <button class="nav-arrow left-arrow" data-part="head" aria-label="Previous head">&#x276E;</button>
+        <img id="head-img" src="" alt="Head option" />
+        <button class="nav-arrow right-arrow" data-part="head" aria-label="Next head">&#x276F;</button>
       </div>
+    </section>
 
-      <button id="next-btn" disabled>Next</button>
-    </div>
+    <section class="part-section" id="mid-section">
+      <h3>Midsection</h3>
+      <div class="image-display">
+        <button class="nav-arrow left-arrow" data-part="mid" aria-label="Previous midsection">&#x276E;</button>
+        <img id="mid-img" src="" alt="Midsection option" />
+        <button class="nav-arrow right-arrow" data-part="mid" aria-label="Next midsection">&#x276F;</button>
+      </div>
+    </section>
+
+    <section class="part-section" id="feet-section">
+      <h3>Feet</h3>
+      <div class="image-display">
+        <button class="nav-arrow left-arrow" data-part="feet" aria-label="Previous feet">&#x276E;</button>
+        <img id="feet-img" src="" alt="Feet option" />
+        <button class="nav-arrow right-arrow" data-part="feet" aria-label="Next feet">&#x276F;</button>
+      </div>
+    </section>
+
+    <button id="finish-btn" disabled>Finish</button>
+  
+    <canvas id="final-canvas" width="320" height="540" style="display:none; border:1px solid #ccc; margin-top: 20px;"></canvas>
   </div>
-    <script src="script.js"></script>
 
-  </body>
-  </html>
-
-
+  <script src="script.js"></script>
+</body>
+</html>
