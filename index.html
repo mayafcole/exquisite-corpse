@@ -3,121 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <title>Exquisite Corpse - Full Figure</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background: white;
-      user-select: none;
-    }
-
-    #container {
-      width: 320px;
-      margin: 0 auto;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .part-section {
-      text-align: center;
-      margin-bottom: 15px;
-      position: relative;
-      background: #f7f7f7;
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-      height: 180px;
-      transition: filter 0.3s ease;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .part-section h3 {
-      margin: 8px 0;
-      font-weight: normal;
-      font-size: 1.2em;
-      color: #333;
-    }
-
-    .image-display {
-      position: relative;
-      height: 120px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .image-display img {
-      max-height: 100%;
-      max-width: 100%;
-      object-fit: contain;
-      user-select: none;
-      pointer-events: none;
-    }
-
-    .nav-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      font-size: 2em;
-      cursor: pointer;
-      color: #333;
-      padding: 0 10px;
-      user-select: none;
-      user-drag: none;
-      z-index: 10;
-      line-height: 1;
-      pointer-events: auto; /* always clickable */
-    }
-
-    .nav-arrow:hover {
-      color: #007BFF;
-    }
-
-    .left-arrow {
-      left: 0;
-    }
-
-    .right-arrow {
-      right: 0;
-    }
-
-    #finish-btn {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      font-size: 1.2em;
-      background: #8bc34a;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 20px;
-      user-select: none;
-    }
-
-    #finish-btn:disabled {
-      background: #aaa;
-      cursor: not-allowed;
-    }
-
-    /* Blackout effect only dims images, keeps arrows clickable */
-    .blacked-out img {
-      filter: brightness(0) opacity(0.3);
-      user-select: none;
-      transition: filter 0.3s ease;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
-
   <div id="container">
-
     <section class="part-section" id="head-section">
       <h3>Head</h3>
       <div class="image-display">
         <button class="nav-arrow left-arrow" data-part="head" aria-label="Previous head">&#x276E;</button>
+        <!-- Initially blank src, JS will update -->
         <img id="head-img" src="" alt="Head option" />
         <button class="nav-arrow right-arrow" data-part="head" aria-label="Next head">&#x276F;</button>
       </div>
@@ -142,10 +38,24 @@
     </section>
 
     <button id="finish-btn" disabled>Finish</button>
-  
+    <button id="restart-btn" style="display:none; margin-top:10px;">Restart</button>
+
     <canvas id="final-canvas" width="320" height="540" style="display:none; border:1px solid #ccc; margin-top: 20px;"></canvas>
+
+    <div id="citation-container" style="display:none; margin-top: 10px; font-size: 0.9em; color: #555; max-width: 320px;">
+      <h4>Citations</h4>
+      <ul id="citations-list" style="list-style: inside disc;"></ul>
+    </div>
+
+    <div id="qr-container" style="text-align:center; margin-top:15px; display:none;">
+      <p>Scan or save your creation!</p>
+      <div id="qrcode"></div>
+      <a id="download-link" href="#" download="exquisite-corpse.png" style="display:block; margin-top:10px;">Download PNG</a>
+    </div>
   </div>
 
+  <!-- QRCode.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
