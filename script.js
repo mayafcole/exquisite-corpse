@@ -15,7 +15,7 @@ const images = {
       citation: 'Courtesy of Museum C'
     }
   ],
-  mid: [
+  body: [
     {
       url: 'gallery/body/body1.png',
       citation: 'Photo by Artist D, Public Domain'
@@ -29,7 +29,7 @@ const images = {
       citation: 'Courtesy of Museum F'
     }
   ],
-  feet: [
+  legs: [
     {
       url: 'gallery/legs/legs1.png',
       citation: 'Photo by Artist G, Public Domain'
@@ -47,8 +47,8 @@ const images = {
 
 const selections = {
   head: 0,
-  mid: 0,
-  feet: 0
+  body: 0,
+  legs: 0
 };
 
 let activePart = 'head';
@@ -56,8 +56,8 @@ let activePart = 'head';
 restartBtn.addEventListener('click', () => {
   // Reset selections
   selections.head = 0;
-  selections.mid = 0;
-  selections.feet = 0;
+  selections.body = 0;
+  selections.legs = 0;
 
   // Hide final canvas and restart button
   document.getElementById('final-canvas').style.display = 'none';
@@ -72,7 +72,7 @@ restartBtn.addEventListener('click', () => {
   document.getElementById('citations-list').innerHTML = '';
 
   // Show all selection sections and finish button
-  ['head-section', 'mid-section', 'feet-section'].forEach(id => {
+  ['head-section', 'body-section', 'legs-section'].forEach(id => {
     document.getElementById(id).style.display = '';
   });
   const finishBtn = document.getElementById('finish-btn');
@@ -80,7 +80,7 @@ restartBtn.addEventListener('click', () => {
   finishBtn.disabled = true;
 
   // Reset UI images and highlights
-  ['head', 'mid', 'feet'].forEach(updateImage);
+  ['head', 'body', 'legs'].forEach(updateImage);
   updateHighlight('head');
 });
 
@@ -88,11 +88,11 @@ restartBtn.addEventListener('click', () => {
 function drawFinalComposite() {
   const canvas = document.getElementById('final-canvas');
   const ctx = canvas.getContext('2d');
-
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const partKeys = ['head', 'mid', 'feet'];
+  const partKeys = ['head', 'body', 'legs'];
   const imgHeight = canvas.height / 3;
+
 
   const loadImagesPromises = partKeys.map((part, index) => {
     return new Promise((resolve, reject) => {
@@ -126,14 +126,14 @@ function updateImage(part) {
 }
 
 function checkFinishReady() {
-  const ready = ['head', 'mid', 'feet'].every(part => selections[part] !== null && selections[part] !== undefined);
+  const ready = ['head', 'body', 'legs'].every(part => selections[part] !== null && selections[part] !== undefined);
   const finishBtn = document.getElementById('finish-btn');
   finishBtn.disabled = !ready;
 }
 
 function updateHighlight(activePartParam) {
   activePart = activePartParam;
-  ['head', 'mid', 'feet'].forEach(part => {
+  ['head', 'body', 'legs'].forEach(part => {
     const section = document.getElementById(`${part}-section`);
     if (!section) return;
     if (part === activePart) {
@@ -161,7 +161,7 @@ document.querySelectorAll('.nav-arrow').forEach(button => {
 });
 
 // Clicking anywhere in a section activates that part
-['head', 'mid', 'feet'].forEach(part => {
+['head', 'body', 'legs'].forEach(part => {
   const section = document.getElementById(`${part}-section`);
   section.addEventListener('click', () => {
     updateHighlight(part);
@@ -172,7 +172,7 @@ document.querySelectorAll('.nav-arrow').forEach(button => {
 function showCitations() {
   const citationsList = document.getElementById('citations-list');
   citationsList.innerHTML = '';
-  ['head', 'mid', 'feet'].forEach(part => {
+  ['head', 'body', 'legs'].forEach(part => {
     const partData = images[part][selections[part]];
     if (!partData) return;
     const li = document.createElement('li');
@@ -184,7 +184,7 @@ function showCitations() {
 
 // Finish button click handler
 document.getElementById('finish-btn').addEventListener('click', () => {
-  ['head-section', 'mid-section', 'feet-section'].forEach(id => {
+  ['head-section', 'body-section', 'legs-section'].forEach(id => {
     document.getElementById(id).style.display = 'none';
   });
   const finishBtn = document.getElementById('finish-btn');
@@ -197,8 +197,8 @@ document.getElementById('finish-btn').addEventListener('click', () => {
 
   drawFinalComposite()
     .then(() => {
-      // generateQRCodeFromCanvas();
       showCitations();
+      // generateQRCodeFromCanvas();
     })
     .catch(e => {
       console.error('Error during drawing or QR:', e);

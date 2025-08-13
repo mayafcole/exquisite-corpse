@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exquisite Corpse Tutorial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="css/modal.css" />    
+</head>
+<body>
+
+  <div id="tutorial-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-slide active" id="slide-0">
+        <h2>Welcome to Exquisite Corpse!</h2>
+        <p>Learn about open access and explore creative collaboration.</p>
+        <button id="next-btn-0">Next</button>
+      </div>
+      <div class="modal-slide" id="slide-1">
+        <h2>What is Open Access?</h2>
+        <p>Free access to research helps innovation grow worldwide.</p>
+        <button id="next-btn-1">Next</button>
+      </div>
+      <div class="modal-slide" id="slide-2">
+        <h2>Why it matters</h2>
+        <p>Join us in expanding knowledge through this collaborative game.</p>
+        <button id="start-btn">Start the Game</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.modal-slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach( (slide, i) => {
+        slide.classList.toggle('active', i===index);
+      });
+    }
+
+    document.getElementById('next-btn-0').addEventListener('click', () => {
+      currentSlide = 1;
+      showSlide(currentSlide);
+    });
+
+    document.getElementById('next-btn-1').addEventListener('click', () => {
+      currentSlide = 2;
+      showSlide(currentSlide);
+    });
+
+    document.getElementById('start-btn').addEventListener('click', () => {
+      // Redirect to main game page
+      window.location.href = 'index.html';
+    });
+  </script>
+
+</body>
+</html>

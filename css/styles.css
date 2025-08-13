@@ -6,7 +6,8 @@ body {
 }
 
 #container {
-  width: 320px;
+  width: 500px;
+  height: auto;
   margin: 0 auto;
   border: 1px solid #ccc;
   box-sizing: border-box;
@@ -61,7 +62,7 @@ body {
   user-select: none;
   z-index: 10;
   line-height: 1;
-  pointer-events: auto;
+  pointer-events: auto; /* always clickable */
 }
 
 .nav-arrow:hover {
@@ -95,8 +96,64 @@ body {
   cursor: not-allowed;
 }
 
+/* Blackout effect dims images but keeps arrows clickable */
 .blacked-out img {
   filter: brightness(0) opacity(0.3);
   user-select: none;
   transition: filter 0.3s ease;
+}
+
+#restart-btn {
+  display: none;
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  background-color: #f57c00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+#restart-btn:hover {
+  background-color: #ef6c00;
+}
+
+#final-canvas {
+  display: none;
+  margin-top: 20px;
+  width: 500px;
+  height: auto;
+}
+
+#citation-container {
+  display: none;
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #555;
+  max-width: 320px;
+}
+
+#qr-container {
+  text-align: center;
+  margin-top: 15px;
+  display: none;
+}
+
+#qr-container p {
+  margin: 0 0 10px 0;
+}
+
+#download-link {
+  display: block;
+  margin-top: 10px;
+  color: #4caf50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#download-link:hover {
+  text-decoration: underline;
 }

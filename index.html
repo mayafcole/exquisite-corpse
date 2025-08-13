@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Exquisite Corpse - Full Figure</title>
+  <title>Dartmouth Libraries' Exquisite Corpse</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -13,44 +13,43 @@
       <h3>Head</h3>
       <div class="image-display">
         <button class="nav-arrow left-arrow" data-part="head" aria-label="Previous head">&#x276E;</button>
-        <!-- Initially blank src, JS will update -->
-        <img id="head-img" src="" alt="Head option" />
+        <img id="head-img" src="/exquisite-corpse/gallery/head/gen_head.png" alt="Head option" />
         <button class="nav-arrow right-arrow" data-part="head" aria-label="Next head">&#x276F;</button>
       </div>
     </section>
 
-    <section class="part-section" id="mid-section">
-      <h3>Midsection</h3>
+    <section class="part-section" id="body-section">
+      <h3>Body</h3>
       <div class="image-display">
-        <button class="nav-arrow left-arrow" data-part="mid" aria-label="Previous midsection">&#x276E;</button>
-        <img id="mid-img" src="" alt="Midsection option" />
-        <button class="nav-arrow right-arrow" data-part="mid" aria-label="Next midsection">&#x276F;</button>
+        <button class="nav-arrow left-arrow" data-part="body" aria-label="Previous body">&#x276E;</button>
+        <img id="body-img" src="/exquisite-corpse/gallery/body/gen_body.png" alt="Body option" />
+        <button class="nav-arrow right-arrow" data-part="body" aria-label="Next body">&#x276F;</button>
       </div>
     </section>
 
-    <section class="part-section" id="feet-section">
-      <h3>Feet</h3>
+    <section class="part-section" id="legs-section">
+      <h3>Legs</h3>
       <div class="image-display">
-        <button class="nav-arrow left-arrow" data-part="feet" aria-label="Previous feet">&#x276E;</button>
-        <img id="feet-img" src="" alt="Feet option" />
-        <button class="nav-arrow right-arrow" data-part="feet" aria-label="Next feet">&#x276F;</button>
+        <button class="nav-arrow left-arrow" data-part="legs" aria-label="Previous legs">&#x276E;</button>
+        <img id="legs-img" src="/exquisite-corpse/gallery/legs/gen_legs.png" alt="Legs option" />
+        <button class="nav-arrow right-arrow" data-part="legs" aria-label="Next legs">&#x276F;</button>
       </div>
     </section>
 
     <button id="finish-btn" disabled>Finish</button>
-    <button id="restart-btn" style="display:none; margin-top:10px;">Restart</button>
+    <button id="restart-btn">Restart</button>
 
-    <canvas id="final-canvas" width="320" height="540" style="display:none; border:1px solid #ccc; margin-top: 20px;"></canvas>
+    <canvas id="final-canvas"></canvas>
 
-    <div id="citation-container" style="display:none; margin-top: 10px; font-size: 0.9em; color: #555; max-width: 320px;">
+    <div id="citation-container">
       <h4>Citations</h4>
-      <ul id="citations-list" style="list-style: inside disc;"></ul>
+      <ul id="citations-list"></ul>
     </div>
 
-    <div id="qr-container" style="text-align:center; margin-top:15px; display:none;">
+    <div id="qr-container">
       <p>Scan or save your creation!</p>
       <div id="qrcode"></div>
-      <a id="download-link" href="#" download="exquisite-corpse.png" style="display:block; margin-top:10px;">Download PNG</a>
+      <a id="download-link">Download PNG</a>
     </div>
   </div>
 
