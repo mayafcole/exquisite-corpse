@@ -3,45 +3,65 @@ const restartBtn = document.getElementById('restart-btn');
 const images = {
   head: [
     {
-      url: 'gallery/head/head1.jpg',
-      citation: 'Photo by Artist A, Public Domain'
+      url: 'gallery/head/head4.png',
+      citation: '"Ahhhhhhh!!!!!!!!!" by Chris Breeze is licensed under CC BY 2.0.'
     },
     {
-      url: 'gallery/head/head2.jpg',
-      citation: 'Photo by Artist B, 1920s Archive'
+      url: 'gallery/head/head5.png',
+      citation: '"Magnera Human Skull 2" by L.C.Nøttaasen is licensed under CC BY-SA 2.0.'
     },
     {
-      url: 'gallery/head/head3.jpg',
-      citation: 'Courtesy of Museum C'
+      url: 'gallery/head/head6.png',
+      citation: '"Vampire" by Carniphage is licensed under CC BY 2.0.'
+    },
+    {
+      url: 'gallery/head/head7.png',
+      citation: '"Werewolf (Harry Potter)" by Robert Clarke is licensed under CC BY 2.0.'
+    },
+    {
+      url: 'gallery/head/head8.png',
+      citation: '"Frankenstein" by twm1340 is licensed under CC BY-SA 2.0.'
     }
   ],
   body: [
     {
-      url: 'gallery/body/body1.png',
-      citation: 'Photo by Artist D, Public Domain'
+      url: 'gallery/body/body4.png',
+      citation: '"Scarecrow" by Jonas B is licensed under CC BY 2.0.'
     },
     {
-      url: 'gallery/body/body2.png',
-      citation: 'Photo by Artist E, 1920s Archive'
+      url: 'gallery/body/body5.png',
+      citation: '"astronaut" by Oregon State University is licensed under CC BY-SA 2.0.'
     },
     {
-      url: 'gallery/body/body3.png',
-      citation: 'Courtesy of Museum F'
+      url: 'gallery/body/body6.png',
+      citation: '"Thick as Thieves tuxedo, Kent Wang marcella shirt" by Kent Wang is licensed under CC BY-SA 2.0.'
+    },
+    {
+      url: 'gallery/body/body7.png',
+      citation: '"The Headless Magician" by Double--M is licensed under CC BY 2.0.'
     }
   ],
   legs: [
     {
-      url: 'gallery/legs/legs1.png',
-      citation: 'Photo by Artist G, Public Domain'
+      url: 'gallery/legs/legs4.png',
+      citation: '"Dance recital" by ChrisMillett12 is licensed under CC BY 2.0.'
     },
     {
-      url: 'gallery/legs/legs2.png',
-      citation: 'Photo by Artist H, 1920s Archive'
+      url: 'gallery/legs/legs5.png',
+      citation: '"Pinnoctopus cordiformis, Common octopus" by brian.gratwicke is licensed under CC BY 2.0.'
     },
     {
-      url: 'gallery/legs/legs3.png',
-      citation: 'Courtesy of Museum I'
-    }
+      url: 'gallery/legs/legs6.png',
+      citation: '"Transformers Bumblebee Concept" by RoninKengo is licensed under CC BY 2.0.'
+    },
+      {
+      url: 'gallery/legs/legs7.png',
+      citation: '"Flamingos\' heart" by Omar.Bariffi is licensed under CC BY 2.0.'
+    },
+    {
+      url: 'gallery/legs/legs8.png',
+      citation: '"CLOWN!" by The Glass Beehive* is licensed under CC BY-SA 2.0.'
+    },
   ]
 };
 
@@ -90,34 +110,39 @@ function drawFinalComposite() {
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const partKeys = ['head', 'body', 'legs'];
-  const imgHeight = canvas.height / 3;
+  const parts = ['head', 'body', 'legs'];
+  const partHeight = canvas.height / parts.length;
+  const maxPartWidth = canvas.width * 0.9;
 
-
-  const loadImagesPromises = partKeys.map((part, index) => {
+  const promises = parts.map((part, index) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
-      img.crossOrigin = 'anonymous';  // set only if needed
+      img.crossOrigin = 'anonymous'; 
       img.onload = () => {
-        const drawHeight = imgHeight;
-        const drawWidth = (img.width / img.height) * drawHeight;
-        const xOffset = (canvas.width - drawWidth) / 2;
-        ctx.drawImage(img, xOffset, index * imgHeight, drawWidth, drawHeight);
+        let drawHeight = partHeight;
+        let drawWidth = (img.width / img.height) * drawHeight;
+        if (drawWidth > maxPartWidth) {
+          drawWidth = maxPartWidth;
+          drawHeight = drawWidth * (img.height / img.width);
+        }
+        const x = (canvas.width - drawWidth) / 2;
+        const y = index * partHeight;   // no vertical padding
+        ctx.drawImage(img, x, y, drawWidth, drawHeight);
         resolve();
       };
       img.onerror = () => {
-        console.error('Failed to load image:', img.src);
-        reject(new Error('Image load failed at ' + img.src));
+        console.error(`Failed to load image: ${img.src}`);
+        reject(new Error(`Image load failed at ${img.src}`));
       };
       img.src = images[part][selections[part]].url;
     });
   });
 
-  return Promise.all(loadImagesPromises).then(() => {
-    console.log('All images loaded and drawn.');
+  return Promise.all(promises).then(() => {
+    console.log('All images loaded and drawn stacked with no vertical gaps.');
   });
 }
-
+    
 
 function updateImage(part) {
   const imgElement = document.getElementById(`${part}-img`);
