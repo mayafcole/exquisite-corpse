@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: Verdana, sans-serif;
   margin: 20px;
   background: white;
   user-select: none;
@@ -104,8 +104,9 @@ body {
 #restart-btn {
   display: none;
   margin: 30px auto 0 auto;   
-  width: 180px;               
+  width: 675px;               
   padding: 12px;
+  padding-bottom: 10px;
   font-size: 1.1em;
   background-color: #f57c00;
   color: white;
@@ -123,24 +124,22 @@ body {
 #final-canvas {
   display: none;
   margin-top: 20px;
-  width: 700px;
-  height: 850px;
+  /* width: 1040px;
+  height: 1650px; */
+  width: 500px;
+  height: 1040px;
 }
   
 
 #citation-container {
   display: none;
-  margin-top: 20px;             /* space from canvas */
-  padding: 15px 20px;           /* add padding */
+  margin-top: 20px;            
+  padding: 5px;           
   font-size: 0.9em;
-  color: #555;
-  max-width: 320px;
-  margin-left: auto;            /* horizontally center */
+  color: #000;
+  width: 695px;
+  margin-left: auto;           
   margin-right: auto;
-  border: 1px solid #ddd;       /* optional border for emphasis */
-  border-radius: 6px;           /* rounded corners */
-  background-color: #fafafa;    /* subtle background */
-  box-shadow: 0 0 8px rgba(0,0,0,0.05);
 }
 
 #citations-list {
