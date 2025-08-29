@@ -3,94 +3,94 @@ const restartBtn = document.getElementById('restart-btn');
 const images = {
   head: [
     {
-      url: 'gallery/head/resized_heads/Jack-O-Latern.png',
+      url: 'gallery/head/smaller_heads/Jack-O-Latern.png',
       citation: '"Ahhhhhhh!!!!!!!!!" by Chris Breeze is licensed under CC BY 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/head/resized_heads/Skull.png',
+      url: 'gallery/head/smaller_heads/Skull.png',
       citation: '"Magnera Human Skull 2" by L.C.Nøttaasen is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false
     },
     {
-      url: 'gallery/head/resized_heads/female_vampire.png',
+      url: 'gallery/head/smaller_heads/female_vampire.png',
       citation: '"Vampire" by Carniphage is licensed under CC BY 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/head/resized_heads/werewolf.png',
+      url: 'gallery/head/smaller_heads/werewolf.png',
       citation: '"Werewolf (Harry Potter)" by Robert Clarke is licensed under CC BY 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/head/resized_heads/Frankenstein.png',
+      url: 'gallery/head/smaller_heads/Frankenstein.png',
       citation: '"Frankenstein" by twm1340 is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false
     },
      {
-      url: 'gallery/head/resized_heads/snake_head.png',
+      url: 'gallery/head/smaller_heads/snake_head.png',
       citation: '"Snake Head" by Skrewtape is licensed under CC BY-SA 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/head/resized_heads/egg.png',
+      url: 'gallery/head/smaller_heads/egg.png',
       citation: '"Oxyura leucocephala MHNT.ZOO.2010.11.11.3" by Roger Culos is licensed under CC BY-SA 4.0.',
       overlapsWithNext: false
     },
     {
-      url: 'gallery/head/resized_heads/hello_kitty.png',
+      url: 'gallery/head/smaller_heads/hello_kitty.png',
       citation: '"Pop! Sanrio" by pullip_junk is licensed under CC BY-NC-ND 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/head/resized_heads/lego_head.png',
+      url: 'gallery/head/smaller_heads/lego_head.png',
       citation: '"終於入手 LEGO Head  !!" by Super Flow 非常流暢 is licensed under CC BY-NC-ND 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/head/resized_heads/robot.png',
+      url: 'gallery/head/smaller_heads/robot.png',
       citation: '"Friendly Robot" by firepile is licensed under CC BY 2.0.',
       overlapsWithNext: false
     },
     {
-      url: 'gallery/head/resized_heads/skull_w_glasses.png',
+      url: 'gallery/head/smaller_heads/skull_w_glasses.png',
       citation: '"Cheap Sunglasses" by erix! is licensed under CC BY 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/head/resized_heads/sad_pumpkin.png',
+      url: 'gallery/head/smaller_heads/sad_pumpkin.png',
       citation: '"Vintage Beistle Jack-O-Lantern sad face" by riptheskull is licensed under CC BY-ND 2.0.',
       overlapsWithNext: false
     }
   ],
   body: [
     {
-      url: 'gallery/body/astronaut.png',
+      url: 'gallery/body/smaller_bodies/astronaut.png',
       citation: '"astronaut" by Oregon State University is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false
     },
     {
-      url: 'gallery/body/tuxedo.png',
+      url: 'gallery/body/smaller_bodies/tuxedo.png',
       citation: '"Thick as Thieves tuxedo, Kent Wang marcella shirt" by Kent Wang is licensed under CC BY-SA 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/body/magician.png',
+      url: 'gallery/body/smaller_bodies/magician.png',
       citation: '"The Headless Magician" by Double--M is licensed under CC BY 2.0.',
       overlapsWithNext: false
     },
      {
-      url: 'gallery/body/king_peguin.png',
+      url: 'gallery/body/smaller_bodies/king_penguin.png',
       citation: '"King Penguin Couple" by D-Stanley is licensed under CC BY 2.0.',
       overlapsWithNext: true
     },
     {
-      url: 'gallery/body/tennis_player.png',
+      url: 'gallery/body/smaller_bodies/tennis_player.png',
       citation: '"Tennis Player Sculpture, Thames Costal Walkway" by russellstreet is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false
     },
     {
-      url: 'gallery/body/snowman.png',
+      url: 'gallery/body/smaller_bodies/snowman.png',
       citation: '"Snowman Neighbor" by MGShelton is licensed under CC BY-NC 2.0.',
       overlapsWithNext: false
     }
@@ -183,150 +183,102 @@ function scaleDimensions(img, maxHeight, maxWidth) {
   return { width, height };
 }
 
-// async function drawFinalComposite() {
-//   const canvas = document.getElementById('final-canvas');
-//   const ctx = canvas.getContext('2d');
-//   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-//   // Approximate target heights for each part based on recommended resize
-//   const partHeights = {
-//     head: 320,
-//     body: 420,
-//     legs: 300
-//   };
-
-//   const maxWidth = canvas.width * 0.9; // Leave horizontal padding
-
-//   // Draw order: legs at bottom, then body, then head on top
-//   const drawOrder = ['legs', 'body', 'head'];
-
-//   // This will track vertical drawing offset from canvas top
-//   let currentY = 0;
-
-//   for (const part of drawOrder) {
-//     const sel = selections[part];
-//     const imageData = images[part][sel];
-
-//     await new Promise((resolve, reject) => {
-//       const img = new Image();
-//       img.crossOrigin = 'anonymous'; // adjust based on origin policy
-//       img.onload = () => {
-//         let drawHeight = partHeights[part];
-//         let drawWidth = (img.width / img.height) * drawHeight;
-
-//         // Adjust width if exceeds max allowed width
-//         if (drawWidth > maxWidth) {
-//           drawWidth = maxWidth;
-//           drawHeight = drawWidth * (img.height / img.width);
-//         }
-
-//         const x = (canvas.width - drawWidth) / 2;
-
-//         // For legs and body, draw at current Y; for head, draw overlapping higher
-//         let y = currentY;
-
-//         // For the head, optionally overlap slightly upwards (adjust as needed)
-//         if (part === 'head') {
-//           y = currentY - (drawHeight * 0.3); // move head 30% into body height
-//         }
-
-//         ctx.drawImage(img, x, y, drawWidth, drawHeight);
-
-//         // Increment y only if not head (which overlaps)
-//         if (part !== 'head') {
-//           currentY += drawHeight;
-//         } else {
-//           // Head overlapping - adjust currentY so next drawing doesn't jump down too far
-//           currentY += drawHeight * 0.7; // less than full height because of overlap
-//         }
-//         resolve();
-//       };
-//       img.onerror = () => {
-//         console.error(`Failed to load image: ${img.src}`);
-//         reject(new Error(`Image load failed at ${img.src}`));
-//       };
-//       img.src = imageData.url;
-//     });
-//   }
-//   console.log('All images loaded and drawn with balanced proportions and overlap.');
-// }
-
 async function drawFinalComposite() {
   const canvas = document.getElementById('final-canvas');
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  const parts = ['head', 'body', 'legs'];
-  const maxWidth = canvas.width * 0.9; // max width per image
+  const maxWidth = canvas.width * 0.9;
 
-  // Custom target heights per part (you can adjust these)
-  const targetHeights = {
-    head: 280,   // smaller head height (less than before)
-    body: 420,
-    legs: 300
+  // Define fixed coordinates for the top-left corner of each part's image (x will be adjusted for centering)
+  const fixedPositions = {
+    head: { x: canvas.width / 2, y: 0 },
+    body: { x: canvas.width / 2, y: 0 },  // y will be computed dynamically below
+    legs: { x: canvas.width / 2, y: 0 }   // y will be computed dynamically below
   };
 
-  // Current vertical position to draw next image
-  let currentY = 0;
+  // Overlap ratios controlling vertical overlaps between parts
+  const overlapRatios = {
+    head_body: 0.9, // 40% overlap of head onto body
+    body_legs: 0.1  // 10% overlap of body onto legs
+  };
 
+  const headScale = 0.7; // Scale down head to 70% of calculated size
+
+  // Load images sequentially to calculate dimensions and y offsets
+  const parts = ['head', 'body', 'legs'];
+  const loadedImages = {};
   for (const part of parts) {
-    const sel = selections[part];
-    const imageData = images[part][sel];
-
-    await new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous'; // adjust/remove if needed
-      img.onload = () => {
-        // Scale proportionally based on target height for part
-        let drawHeight = targetHeights[part];
-        let drawWidth = (img.width / img.height) * drawHeight;
-
-        // Constrain width
-        if (drawWidth > maxWidth) {
-          drawWidth = maxWidth;
-          drawHeight = drawWidth * (img.height / img.width);
-        }
-
-        const x = (canvas.width - drawWidth) / 2;  // horizontal center
-
-        // Calculate y position with custom overlap
-        let y = currentY;
-
-        if (part === 'legs') {
-          // legs at currentY (bottom part)
-          // no special offset
-        } else if (part === 'body') {
-          // body overlaps legs more by reducing vertical gap (increase overlap)
-          y = currentY - (drawHeight * 0.45); // 45% overlap upwards
-        } else if (part === 'head') {
-          // make head spaced a bit further from the body (less overlap)
-          y = currentY + 20;  // shift down 20px gap for more spacing
-        }
-
-        ctx.drawImage(img, x, y, drawWidth, drawHeight);
-
-        // Update currentY for next image (legs always increases fully)
-        if (part === 'legs') {
-          currentY += drawHeight;
-        } else if (part === 'body') {
-          // increase by less because head overlaps body by 20px gap
-          currentY = y + drawHeight;
-        } else if (part === 'head') {
-          // update currentY for body drawing next loop
-          currentY = y + drawHeight;
-        }
-
-        resolve();
-      };
-      img.onerror = () => {
-        console.error('Failed to load image:', img.src);
-        reject(new Error('Image load failed at ' + img.src));
-      };
-      img.src = imageData.url;
-    });
+    loadedImages[part] = await loadImage(images[part][selections[part]].url);
   }
 
-  console.log('All parts drawn with custom overlaps and head resized.');
+  // Calculate scaled dimensions (respecting maxWidth)
+  const scaledDims = {};
+  for (const part of parts) {
+    let img = loadedImages[part];
+    let width = img.width;
+    let height = img.height;
+    if (width > maxWidth) {
+      width = maxWidth;
+      height = width * (img.height / img.width);
+    }
+
+    // Apply scaling for head only
+    if (part === 'head') {
+      height *= headScale;
+      width *= headScale;
+    }
+
+    scaledDims[part] = { width, height };
+  }
+
+  // Calculate Y positions applying overlaps
+  fixedPositions.head.y = 0; // start at top
+  fixedPositions.body.y =
+    fixedPositions.head.y +
+    scaledDims.head.height * (1 - overlapRatios.head_body);
+  fixedPositions.legs.y =
+    fixedPositions.body.y +
+    scaledDims.body.height * (1 - overlapRatios.body_legs);
+
+  // Optionally adjust canvas height to fit all parts
+  const totalHeight =
+    fixedPositions.legs.y + scaledDims.legs.height;
+  if (totalHeight > canvas.height) {
+    canvas.height = totalHeight;
+  }
+
+  // Draw images, centering horizontally
+  for (const part of parts) {
+    const pos = fixedPositions[part];
+    const dim = scaledDims[part];
+    const x = pos.x - dim.width / 2; // center horizontally
+    ctx.drawImage(loadedImages[part], x, pos.y, dim.width, dim.height);
+  }
+
+  console.log('Final composite drawn with scaled head.');
+}
+
+// Helper function to load image as Promise (if you don't already have this)
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error(`Image failed to load: ${src}`));
+    img.src = src;
+  });
+}
+
+// Helper function to load images as Promise
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';  // adjust based on your image hosting
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Failed to load image: '+src));
+    img.src = src;
+  });
 }
 
 // Helper function to load image

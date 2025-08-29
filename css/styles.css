@@ -122,12 +122,10 @@ body {
 }
 
 #final-canvas {
-  display: none;
+  display: block;
   margin-top: 20px;
-  /* width: 1040px;
-  height: 1650px; */
   width: 500px;
-  height: 1040px;
+  height: 900px;
 }
   
 
