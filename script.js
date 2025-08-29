@@ -5,121 +5,146 @@ const images = {
     {
       url: 'gallery/head/smaller_heads/Jack-O-Latern.png',
       citation: '"Ahhhhhhh!!!!!!!!!" by Chris Breeze is licensed under CC BY 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'Jack-O-Latern'
+
     },
     {
       url: 'gallery/head/smaller_heads/Skull.png',
       citation: '"Magnera Human Skull 2" by L.C.Nøttaasen is licensed under CC BY-SA 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Skull'
+
     },
     {
       url: 'gallery/head/smaller_heads/female_vampire.png',
       citation: '"Vampire" by Carniphage is licensed under CC BY 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'Vampire'
     },
     {
       url: 'gallery/head/smaller_heads/werewolf.png',
       citation: '"Werewolf (Harry Potter)" by Robert Clarke is licensed under CC BY 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'Werewolf'
     },
     {
       url: 'gallery/head/smaller_heads/Frankenstein.png',
       citation: '"Frankenstein" by twm1340 is licensed under CC BY-SA 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Frankenstein'
     },
      {
       url: 'gallery/head/smaller_heads/snake_head.png',
       citation: '"Snake Head" by Skrewtape is licensed under CC BY-SA 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'Snake'
     },
     {
       url: 'gallery/head/smaller_heads/egg.png',
       citation: '"Oxyura leucocephala MHNT.ZOO.2010.11.11.3" by Roger Culos is licensed under CC BY-SA 4.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Egghead'
     },
     {
       url: 'gallery/head/smaller_heads/hello_kitty.png',
       citation: '"Pop! Sanrio" by pullip_junk is licensed under CC BY-NC-ND 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'Hello Kitty'
     },
     {
       url: 'gallery/head/smaller_heads/lego_head.png',
       citation: '"終於入手 LEGO Head  !!" by Super Flow 非常流暢 is licensed under CC BY-NC-ND 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'LEGO Head'
     },
     {
       url: 'gallery/head/smaller_heads/robot.png',
       citation: '"Friendly Robot" by firepile is licensed under CC BY 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Robot'
     },
     {
       url: 'gallery/head/smaller_heads/skull_w_glasses.png',
       citation: '"Cheap Sunglasses" by erix! is licensed under CC BY 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'Cool Skull'
     },
     {
       url: 'gallery/head/smaller_heads/sad_pumpkin.png',
       citation: '"Vintage Beistle Jack-O-Lantern sad face" by riptheskull is licensed under CC BY-ND 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Sad Jack-O-Lantern'
     }
   ],
   body: [
     {
       url: 'gallery/body/smaller_bodies/astronaut.png',
       citation: '"astronaut" by Oregon State University is licensed under CC BY-SA 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Astronaut'
     },
     {
       url: 'gallery/body/smaller_bodies/tuxedo.png',
       citation: '"Thick as Thieves tuxedo, Kent Wang marcella shirt" by Kent Wang is licensed under CC BY-SA 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'Spy'
     },
     {
       url: 'gallery/body/smaller_bodies/magician.png',
       citation: '"The Headless Magician" by Double--M is licensed under CC BY 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Magician'
     },
      {
       url: 'gallery/body/smaller_bodies/king_penguin.png',
       citation: '"King Penguin Couple" by D-Stanley is licensed under CC BY 2.0.',
-      overlapsWithNext: true
+      overlapsWithNext: true,
+      title: 'Penguin'
     },
     {
       url: 'gallery/body/smaller_bodies/tennis_player.png',
       citation: '"Tennis Player Sculpture, Thames Costal Walkway" by russellstreet is licensed under CC BY-SA 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Tennis Player'
     },
     {
       url: 'gallery/body/smaller_bodies/snowman.png',
       citation: '"Snowman Neighbor" by MGShelton is licensed under CC BY-NC 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Snowman'
     }
   ],
   legs: [
     {
       url: 'gallery/legs/2.png',
       citation: '"Dance recital" by ChrisMillett12 is licensed under CC BY 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Ballerina'
     },
     {
       url: 'gallery/legs/3.png',
       citation: '"Pinnoctopus cordiformis, Common octopus" by brian.gratwicke is licensed under CC BY 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Octopus'
     },
     {
       url: 'gallery/legs/4.png',
       citation: '"Transformers Bumblebee Concept" by RoninKengo is licensed under CC BY 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Bumblebee'
     },
     {
       url: 'gallery/legs/5.png',
       citation: '"Flamingos\' heart" by Omar.Bariffi is licensed under CC BY 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Flamingo'
     },
     {
       url: 'gallery/legs/6.png',
       citation: '"CLOWN!" by The Glass Beehive* is licensed under CC BY-SA 2.0.',
-      overlapsWithNext: false
+      overlapsWithNext: false,
+      title: 'Clown'
     }
   ]
 };
@@ -361,12 +386,16 @@ function showCitations() {
 }
 
 document.getElementById('finish-btn').addEventListener('click', async () => {
+  // Hide selection UI and finish button
   ['head-section', 'body-section', 'legs-section'].forEach(id =>
     document.getElementById(id).style.display = 'none'
   );
+  document.getElementById('finish-btn').style.display = 'none';
 
-  const finishBtn = document.getElementById('finish-btn');
-  finishBtn.style.display = 'none';
+  // Show the final image heading and canvas
+  const headingEl = document.getElementById('final-heading');
+  headingEl.textContent = createFinalHeading();
+  headingEl.style.display = 'block';
 
   const finalCanvas = document.getElementById('final-canvas');
   finalCanvas.style.display = 'block';
@@ -382,6 +411,20 @@ document.getElementById('finish-btn').addEventListener('click', async () => {
     alert('Error loading images or generating QR code.');
   }
 });
+
+function createFinalHeading() {
+  const headTitle = (images.head[selections.head].title || '').trim();
+  const bodyTitle = (images.body[selections.body].title || '').trim();
+  const legsTitle = (images.legs[selections.legs].title || '').trim();
+
+  // Concatenate only non-empty titles with spaces
+  const titles = [headTitle, bodyTitle, legsTitle].filter(Boolean).join(' ');
+
+  return `"The ${titles}"`;
+}
+
+const headingEl = document.getElementById('final-heading');
+headingEl.textContent = createFinalHeading();
 
 // function generateQRCodeFromCanvas() {
 //   const canvas = document.getElementById('final-canvas');
