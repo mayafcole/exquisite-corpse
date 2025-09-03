@@ -149,6 +149,12 @@ const images = {
   ]
 };
 
+const currentIndices = {
+  head: 0,
+  body: 0,
+  legs: 0
+};
+
 const selections = {
   head: 0,
   body: 0,
@@ -320,6 +326,7 @@ function loadImage(url) {
 function updateImage(part) {
   const imgElement = document.getElementById(`${part}-img`);
   imgElement.src = images[part][selections[part]].url;
+  currentIndices[part] = selections[part]; // keep currentIndices synced
   checkFinishReady();
 }
 
@@ -342,18 +349,36 @@ function updateHighlight(activePartParam) {
   });
 }
 
+// document.querySelectorAll('.nav-arrow').forEach(button => {
+//   button.addEventListener('click', () => {
+//     const part = button.dataset.part;
+//     const isLeft = button.classList.contains('left-arrow');
+//     const len = images[part].length;
+//     if (isLeft) {
+//       selections[part] = (selections[part] - 1 + len) % len;
+//     } else {
+//       selections[part] = (selections[part] + 1) % len;
+//     }
+//     updateImage(part);
+//     updateHighlight(part);
+//   });
+// });
+
 document.querySelectorAll('.nav-arrow').forEach(button => {
-  button.addEventListener('click', () => {
+  button.addEventListener('click', async () => {
     const part = button.dataset.part;
-    const isLeft = button.classList.contains('left-arrow');
-    const len = images[part].length;
-    if (isLeft) {
-      selections[part] = (selections[part] - 1 + len) % len;
-    } else {
-      selections[part] = (selections[part] + 1) % len;
+
+    // Disable buttons while animating
+    document.querySelectorAll(`.nav-arrow[data-part="${part}"]`).forEach(b => b.disabled = true);
+
+    try {
+      await animateCarousel(part);
+      updateImage(part);
+      updateHighlight(part);
+      checkFinishReady();
+    } finally {
+      document.querySelectorAll(`.nav-arrow[data-part="${part}"]`).forEach(b => b.disabled = false);
     }
-    updateImage(part);
-    updateHighlight(part);
   });
 });
 
@@ -363,6 +388,32 @@ document.querySelectorAll('.nav-arrow').forEach(button => {
     updateHighlight(part);
   });
 });
+
+function animateCarousel(part) {
+  const imagesArray = images[part];
+  const imgElement = document.getElementById(`${part}-img`);
+  let count = 0;
+  const maxCycles = 30;
+  const intervalMs = 50;
+
+  return new Promise((resolve) => {
+    const intervalId = setInterval(() => {
+      currentIndices[part] = (currentIndices[part] + 1) % imagesArray.length;
+      imgElement.src = imagesArray[currentIndices[part]].url;
+      count++;
+
+      if (count >= maxCycles) {
+        clearInterval(intervalId);
+        // Pick a random image at the end
+        const randomIndex = Math.floor(Math.random() * imagesArray.length);
+        currentIndices[part] = randomIndex;
+        imgElement.src = imagesArray[randomIndex].url;
+        selections[part] = randomIndex;
+        resolve(randomIndex);
+      }
+    }, intervalMs);
+  });
+}
 
 
 function showCitations() {
