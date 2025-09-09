@@ -1,4 +1,5 @@
 const restartBtn = document.getElementById('restart-btn');
+const finishBtn = document.getElementById('finish-btn');
 
 const images = {
   head: [
@@ -163,179 +164,44 @@ const selections = {
 
 let activePart = 'head';
 
-// Reset the game state
-restartBtn.addEventListener('click', () => {
-  selections.head = 0;
-  selections.body = 0;
-  selections.legs = 0;
 
-  document.getElementById('final-canvas').style.display = 'none';
-  restartBtn.style.display = 'none';
-
-  document.getElementById('qr-container').style.display = 'none';
-  document.getElementById('qrcode').innerHTML = '';
-  const downloadLink = document.getElementById('download-link');
-  downloadLink.href = '#';
-
-  document.getElementById('citation-container').style.display = 'none';
-  document.getElementById('citations-list').innerHTML = '';
-
-  ['head-section', 'body-section', 'legs-section'].forEach(id => {
-    document.getElementById(id).style.display = '';
-  });
-
-  const finishBtn = document.getElementById('finish-btn');
-  finishBtn.style.display = '';
-  finishBtn.disabled = true;
-
-  ['head', 'body', 'legs'].forEach(updateImage);
-  updateHighlight('head');
-});
-
+// Helper: Load image asynchronously
 function loadImage(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = 'anonymous'; // adjust or remove if needed
+    img.crossOrigin = 'anonymous'; // Adjust/remove based on your server setup
     img.onload = () => resolve(img);
     img.onerror = () => reject(new Error(`Image failed to load: ${src}`));
     img.src = src;
   });
 }
 
+// Helper: Scale image while keeping aspect ratio
 function scaleDimensions(img, maxHeight, maxWidth) {
   let height = maxHeight;
   let width = (img.width / img.height) * height;
-
   if (width > maxWidth) {
     width = maxWidth;
     height = width * (img.height / img.width);
   }
-
   return { width, height };
 }
 
-async function drawFinalComposite() {
-  const canvas = document.getElementById('final-canvas');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  const maxWidth = canvas.width * 0.9;
-
-  // Define fixed coordinates for the top-left corner of each part's image (x will be adjusted for centering)
-  const fixedPositions = {
-    head: { x: canvas.width / 2, y: 0 },
-    body: { x: canvas.width / 2, y: 0 },  // y will be computed dynamically below
-    legs: { x: canvas.width / 2, y: 0 }   // y will be computed dynamically below
-  };
-
-  // Overlap ratios controlling vertical overlaps between parts
-  const overlapRatios = {
-    head_body: 0.9, // 40% overlap of head onto body
-    body_legs: 0.1  // 10% overlap of body onto legs
-  };
-
-  const headScale = 0.7; // Scale down head to 70% of calculated size
-
-  // Load images sequentially to calculate dimensions and y offsets
-  const parts = ['head', 'body', 'legs'];
-  const loadedImages = {};
-  for (const part of parts) {
-    loadedImages[part] = await loadImage(images[part][selections[part]].url);
-  }
-
-  // Calculate scaled dimensions (respecting maxWidth)
-  const scaledDims = {};
-  for (const part of parts) {
-    let img = loadedImages[part];
-    let width = img.width;
-    let height = img.height;
-    if (width > maxWidth) {
-      width = maxWidth;
-      height = width * (img.height / img.width);
-    }
-
-    // Apply scaling for head only
-    if (part === 'head') {
-      height *= headScale;
-      width *= headScale;
-    }
-
-    scaledDims[part] = { width, height };
-  }
-
-  // Calculate Y positions applying overlaps
-  fixedPositions.head.y = 0; // start at top
-  fixedPositions.body.y =
-    fixedPositions.head.y +
-    scaledDims.head.height * (1 - overlapRatios.head_body);
-  fixedPositions.legs.y =
-    fixedPositions.body.y +
-    scaledDims.body.height * (1 - overlapRatios.body_legs);
-
-  // Optionally adjust canvas height to fit all parts
-  const totalHeight =
-    fixedPositions.legs.y + scaledDims.legs.height;
-  if (totalHeight > canvas.height) {
-    canvas.height = totalHeight;
-  }
-
-  // Draw images, centering horizontally
-  for (const part of parts) {
-    const pos = fixedPositions[part];
-    const dim = scaledDims[part];
-    const x = pos.x - dim.width / 2; // center horizontally
-    ctx.drawImage(loadedImages[part], x, pos.y, dim.width, dim.height);
-  }
-
-  console.log('Final composite drawn with scaled head.');
-}
-
-// Helper function to load image as Promise (if you don't already have this)
-function loadImage(src) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(`Image failed to load: ${src}`));
-    img.src = src;
-  });
-}
-
-// Helper function to load images as Promise
-function loadImage(src) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';  // adjust based on your image hosting
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error('Failed to load image: '+src));
-    img.src = src;
-  });
-}
-
-// Helper function to load image
-function loadImage(url) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous'; // adjust/remove as needed
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error('Failed to load image at ' + url));
-    img.src = url;
-  });
-}
- 
+// Update displayed image for a part
 function updateImage(part) {
   const imgElement = document.getElementById(`${part}-img`);
   imgElement.src = images[part][selections[part]].url;
-  currentIndices[part] = selections[part]; // keep currentIndices synced
+  currentIndices[part] = selections[part];
   checkFinishReady();
 }
 
+// Enable finish button only if all parts selected
 function checkFinishReady() {
   const ready = ['head', 'body', 'legs'].every(part => selections[part] !== null && selections[part] !== undefined);
-  const finishBtn = document.getElementById('finish-btn');
   finishBtn.disabled = !ready;
 }
 
+// Highlight active part, blackout others
 function updateHighlight(activePartParam) {
   activePart = activePartParam;
   ['head', 'body', 'legs'].forEach(part => {
@@ -349,28 +215,174 @@ function updateHighlight(activePartParam) {
   });
 }
 
-// document.querySelectorAll('.nav-arrow').forEach(button => {
-//   button.addEventListener('click', () => {
-//     const part = button.dataset.part;
-//     const isLeft = button.classList.contains('left-arrow');
-//     const len = images[part].length;
-//     if (isLeft) {
-//       selections[part] = (selections[part] - 1 + len) % len;
-//     } else {
-//       selections[part] = (selections[part] + 1) % len;
-//     }
-//     updateImage(part);
-//     updateHighlight(part);
-//   });
-// });
+// Animate carousel for a given part
+function animateCarousel(part) {
+  const imagesArray = images[part];
+  const imgElement = document.getElementById(`${part}-img`);
+  let count = 0;
+  const maxCycles = 30;
+  const intervalMs = 50;
+  return new Promise(resolve => {
+    const intervalId = setInterval(() => {
+      currentIndices[part] = (currentIndices[part] + 1) % imagesArray.length;
+      imgElement.src = imagesArray[currentIndices[part]].url;
+      count++;
+      if (count >= maxCycles) {
+        clearInterval(intervalId);
+        const randomIndex = Math.floor(Math.random() * imagesArray.length);
+        currentIndices[part] = randomIndex;
+        imgElement.src = imagesArray[randomIndex].url;
+        selections[part] = randomIndex;
+        resolve(randomIndex);
+      }
+    }, intervalMs);
+  });
+}
 
+async function drawFinalComposite() {
+  const canvas = document.getElementById('final-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Clear the canvas before drawing
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const maxWidth = canvas.width * 0.9; // Leave horizontal padding
+
+  // Positions of top-left corner for each part, Y to be computed
+  const fixedPositions = {
+    head: { x: canvas.width / 2, y: 0 },
+    body: { x: canvas.width / 2, y: 0 },  // calculate below
+    legs: { x: canvas.width / 2, y: 0 }   // calculate below
+  };
+
+  // Overlap ratios for vertical overlaps between parts
+  const overlapRatios = {
+    head_body: 0.8,  // 30% overlap between head and body
+    body_legs: 0.15  // 40% overlap between body and legs
+  };
+
+  const headScale = 0.7; // Scale down head to 70% size
+
+  // Order of parts to draw (top to bottom)
+  const parts = ['head', 'body', 'legs'];
+
+  // Load images asynchronously
+  const loadedImages = {};
+  for (const part of parts) {
+    loadedImages[part] = await loadImage(images[part][selections[part]].url);
+  }
+
+  // Compute scaled dimensions for each image
+  const scaledDims = {};
+  for (const part of parts) {
+    const img = loadedImages[part];
+    let width = img.width;
+    let height = img.height;
+
+    if (width > maxWidth) {
+      width = maxWidth;
+      height = width * (img.height / img.width);
+    }
+
+    if (part === 'head') {
+      width *= headScale;
+      height *= headScale;
+    }
+
+    scaledDims[part] = { width, height };
+  }
+
+  // Calculate vertical positions with overlaps
+  fixedPositions.head.y = 0;
+
+  fixedPositions.body.y = fixedPositions.head.y + scaledDims.head.height * (1 - overlapRatios.head_body);
+
+  fixedPositions.legs.y = fixedPositions.body.y + scaledDims.body.height * (1 - overlapRatios.body_legs);
+
+  // Compute total height needed for canvas
+  const totalHeight = fixedPositions.legs.y + scaledDims.legs.height;
+  if (totalHeight > canvas.height) {
+    canvas.height = totalHeight;  // resize canvas height if necessary
+  }
+
+  // Draw images centered horizontally and stacked vertically with overlap
+  for (const part of parts) {
+    const pos = fixedPositions[part];
+    const dim = scaledDims[part];
+    const x = pos.x - dim.width / 2;  // horizontally center the image
+    ctx.drawImage(loadedImages[part], x, pos.y, dim.width, dim.height);
+  }
+
+  console.log('Final composite drawn with proper overlap.');
+}
+
+// Helper function to load image asynchronously
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';  // adjust/remove as needed
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Failed to load image at ' + src));
+    img.src = src;
+  });
+}
+
+// Show citations list
+function showCitations() {
+  const citationsList = document.getElementById('citations-list');
+  citationsList.innerHTML = '';
+  ['head', 'body', 'legs'].forEach(part => {
+    const partData = images[part][selections[part]];
+    if (!partData || !partData.citation) return;
+    const li = document.createElement('li');
+    li.textContent = partData.citation;
+    citationsList.appendChild(li);
+  });
+  document.getElementById('citation-container').style.display = 'block';
+}
+
+async function generateQRCodeForFirebaseImage() {
+  try {
+    // Upload the canvas image to Firebase Storage and get download URL
+    const downloadURL = await uploadCanvasImage(); // your upload function
+
+    // Get references to QR code container and related elements
+    const qrcodeDiv = document.getElementById('qrcode');
+    const qrcodeContainer = document.getElementById('qr-container');
+    const downloadLink = document.getElementById('download-link');
+
+    // Clear previous QR code if any
+    qrcodeDiv.innerHTML = '';
+
+    // Generate QR code with the download URL
+    new QRCode(qrcodeDiv, {
+      text: downloadURL,
+      width: 180,
+      height: 180
+    });
+
+    // Update download link href for PNG download
+    downloadLink.href = downloadURL;
+
+    // Show the QR code container
+    qrcodeContainer.style.display = 'block';
+
+  } catch (error) {
+    console.error('Error uploading image or generating QR code:', error);
+    alert('Failed to upload image or generate QR code.');
+  }
+}
+
+// Attach to your generate button
+document.getElementById('generate-qr-btn').addEventListener('click', () => {
+  generateQRCodeForFirebaseImage();
+});
+
+// Event listeners
 document.querySelectorAll('.nav-arrow').forEach(button => {
   button.addEventListener('click', async () => {
     const part = button.dataset.part;
-
-    // Disable buttons while animating
     document.querySelectorAll(`.nav-arrow[data-part="${part}"]`).forEach(b => b.disabled = true);
-
     try {
       await animateCarousel(part);
       updateImage(part);
@@ -384,69 +396,16 @@ document.querySelectorAll('.nav-arrow').forEach(button => {
 
 ['head', 'body', 'legs'].forEach(part => {
   const section = document.getElementById(`${part}-section`);
-  section.addEventListener('click', () => {
-    updateHighlight(part);
-  });
+  if(section) {
+    section.addEventListener('click', () => updateHighlight(part));
+  }
 });
 
-function animateCarousel(part) {
-  const imagesArray = images[part];
-  const imgElement = document.getElementById(`${part}-img`);
-  let count = 0;
-  const maxCycles = 30;
-  const intervalMs = 50;
-
-  return new Promise((resolve) => {
-    const intervalId = setInterval(() => {
-      currentIndices[part] = (currentIndices[part] + 1) % imagesArray.length;
-      imgElement.src = imagesArray[currentIndices[part]].url;
-      count++;
-
-      if (count >= maxCycles) {
-        clearInterval(intervalId);
-        // Pick a random image at the end
-        const randomIndex = Math.floor(Math.random() * imagesArray.length);
-        currentIndices[part] = randomIndex;
-        imgElement.src = imagesArray[randomIndex].url;
-        selections[part] = randomIndex;
-        resolve(randomIndex);
-      }
-    }, intervalMs);
-  });
-}
-
-
-function showCitations() {
-  const citationsList = document.getElementById('citations-list');
-  citationsList.innerHTML = '';
-
-  ['head', 'body', 'legs'].forEach(part => {
-    const partData = images[part][selections[part]];
-    
-    // Log the citation or note missing data
-    console.log(`Citation for ${part}:`, partData ? partData.citation : 'No data');
-
-    if (!partData || !partData.citation || partData.citation.trim() === '') return;
-
-    const li = document.createElement('li');
-    li.textContent = partData.citation;
-    citationsList.appendChild(li);
-  });
-
-  document.getElementById('citation-container').style.display = 'block';
-}
-
-document.getElementById('finish-btn').addEventListener('click', async () => {
-  // Hide selection UI and finish button
+finishBtn.addEventListener('click', async () => {
   ['head-section', 'body-section', 'legs-section'].forEach(id =>
     document.getElementById(id).style.display = 'none'
   );
-  document.getElementById('finish-btn').style.display = 'none';
-
-  // Show the final image heading and canvas
-  const headingEl = document.getElementById('final-heading');
-  headingEl.textContent = createFinalHeading();
-  headingEl.style.display = 'block';
+  finishBtn.style.display = 'none';
 
   const finalCanvas = document.getElementById('final-canvas');
   finalCanvas.style.display = 'block';
@@ -456,50 +415,33 @@ document.getElementById('finish-btn').addEventListener('click', async () => {
   try {
     await drawFinalComposite();
     showCitations();
-    // generateQRCodeFromCanvas();
-  } catch (e) {
-    console.error('Error during drawing or QR:', e);
-    alert('Error loading images or generating QR code.');
+    await generateQRCodeForFirebaseImage();
+  } catch(e) {
+    console.error('Error drawing or processing:', e);
+    alert('There was an error generating the final image.');
   }
 });
 
-function createFinalHeading() {
-  const headTitle = (images.head[selections.head].title || '').trim();
-  const bodyTitle = (images.body[selections.body].title || '').trim();
-  const legsTitle = (images.legs[selections.legs].title || '').trim();
+restartBtn.addEventListener('click', () => {
+  selections.head = 0;
+  selections.body = 0;
+  selections.legs = 0;
 
-  // Concatenate only non-empty titles with spaces
-  const titles = [headTitle, bodyTitle, legsTitle].filter(Boolean).join(' ');
+  document.getElementById('final-canvas').style.display = 'none';
+  restartBtn.style.display = 'none';
 
-  return `"The ${titles}"`;
-}
+  document.getElementById('qr-container').style.display = 'none';
+  document.getElementById('qrcode').innerHTML = '';
+  document.getElementById('citation-container').style.display = 'none';
+  document.getElementById('citations-list').innerHTML = '';
 
-const headingEl = document.getElementById('final-heading');
-headingEl.textContent = createFinalHeading();
+  ['head-section', 'body-section', 'legs-section'].forEach(id =>
+    document.getElementById(id).style.display = ''
+  );
 
-// function generateQRCodeFromCanvas() {
-//   const canvas = document.getElementById('final-canvas');
-//   const qrcodeContainer = document.getElementById('qr-container');
-//   const qrcodeDiv = document.getElementById('qrcode');
-//   const downloadLink = document.getElementById('download-link');
+  finishBtn.style.display = '';
+  finishBtn.disabled = true;
 
-//   qrcodeDiv.innerHTML = '';
-
-//   const imgDataUrl = canvas.toDataURL('image/png');
-
-//   if (!imgDataUrl || imgDataUrl.length < 100) {
-//     console.error('Invalid or empty canvas data URL');
-//     alert('Canvas image not ready for QR code generation.');
-//     return;
-//   }
-
-//   downloadLink.href = imgDataUrl;
-
-//   new QRCode(qrcodeDiv, {
-//     text: imgDataUrl,
-//     width: 180,
-//     height: 180
-//   });
-
-//   qrcodeContainer.style.display = 'block';
-// }
+  ['head', 'body', 'legs'].forEach(updateImage);
+  updateHighlight('head');
+});

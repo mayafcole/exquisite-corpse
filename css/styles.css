@@ -7,9 +7,7 @@ body {
 
 #container {
   width: 700px;
-  height: auto;
   margin: 0 auto;
-  border: 1px solid #ccc;
   box-sizing: border-box;
 }
 
@@ -18,7 +16,7 @@ body {
   position: relative;
   background: #ffffff;
   border-bottom: 1px solid #ccc;
-  height: 180px;
+  height: 300px;
   transition: filter 0.3s ease;
   cursor: pointer;
   user-select: none;
@@ -33,7 +31,7 @@ body {
 
 .image-display {
   position: relative;
-  height: 180;
+  height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,55 +99,81 @@ body {
   transition: filter 0.3s ease;
 }
 
-#restart-btn {
-  display: none;
-  margin: 30px auto 0 auto;   
-  width: 675px;               
-  padding: 12px;
-  padding-bottom: 10px;
-  font-size: 1.1em;
-  background-color: #f57c00;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s ease;
+#final-section {
+  margin-top: 20px;
+  text-align: center;
 }
 
-#restart-btn:hover {
-  background-color: #ef6c00;
+#final-heading {
+  margin-bottom: 15px;
 }
 
 #final-canvas {
   display: block;
-  margin-top: 20px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
   width: 500px;
   height: 900px;
 }
-  
 
 #citation-container {
   display: none;
-  margin-top: 20px;            
-  padding: 5px;           
+  margin-top: 20px;
+  padding: 10px 20px;
   font-size: 0.9em;
-  color: #000;
-  width: 695px;
-  margin-left: auto;           
+  color: #555;
+  width: 480px;
+  margin-left: auto;
   margin-right: auto;
+  border: 1px solid #ddd;
+  text-align: left;
 }
 
 #citations-list {
   list-style: inside disc;
   padding-left: 0;
   margin: 0;
+  text-align: left;
+}
+
+#action-buttons {
+  display: flex;
+  justify-content: center;       /* horizontally center the group */
+  gap: 20px;                     /* space between buttons */
+  margin: 20px auto 10px auto;   /* spacing above and below */
+  max-width: 400px;              /* optional max width */
+}
+
+#action-buttons button {
+  flex: 1;                      /* buttons share available space equally */
+  padding: 12px;
+  font-size: 1.1em;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+#restart-btn {
+  background-color: #f57c00;
+}
+#restart-btn:hover {
+  background-color: #ef6c00;
+}
+
+#generate-qr-btn {
+  background-color: black;
+}
+#generate-qr-btn:hover {
+  background-color: #1976D2;
 }
 
 #qr-container {
+  display: none;
   text-align: center;
   margin-top: 15px;
-  display: none;
 }
 
 #qr-container p {
@@ -160,10 +184,26 @@ body {
   display: block;
   margin-top: 10px;
   color: #4caf50;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
 }
 
 #download-link:hover {
   text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  #container {
+    width: 90%;
+  }
+
+  #final-canvas {
+    width: 100%;
+    height: auto;
+  }
+
+  #citation-container {
+    max-width: 100%;
+  }
 }
