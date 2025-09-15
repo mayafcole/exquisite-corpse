@@ -1,3 +1,49 @@
+const firebaseConfig = {
+apiKey: "AIzaSyDdylD42bvnAEg1zFpcxccIlI3UV4oQZfM",
+authDomain: "exquisite-corpse-b3d86.firebaseapp.com",
+projectId: "exquisite-corpse-b3d86",
+storageBucket: "exquisite-corpse-b3d86.firebasestorage.app", // <-- change this
+messagingSenderId: "342957648893",
+appId: "1:342957648893:web:cb21cb307f676ea4f6c794",
+measurementId: "G-2FK0314SLH"
+};
+
+
+async function uploadCanvasImage() {
+const canvas = document.getElementById('final-canvas');
+if (!canvas) throw new Error('Canvas element not found.');
+// Convert data URL to Blob reliably
+const dataURL = canvas.toDataURL('image/png');
+const blob = await (await fetch(dataURL)).blob();
+const storage = firebase.storage();
+const storageRef = storage.ref();
+const imagesRef = storageRef.child('images/' + Date.now() + '.png');
+const snapshot = await imagesRef.put(blob);
+const downloadURL = await snapshot.ref.getDownloadURL();
+console.log('File available at:', downloadURL);
+return downloadURL;
+}
+
+
+firebase.initializeApp(firebaseConfig);
+if (firebase.analytics) firebase.analytics();
+
+console.log("FIREBASE STUFF");
+
+firebase.storage().setMaxUploadRetryTime(5000);
+(async () => {
+try {
+console.log('Starting test upload…');
+const snap = await firebase.storage().ref('images/test.txt')
+.putString('hello world', 'raw', { contentType: 'text/plain' });
+console.log('Test upload OK:', await snap.ref.getDownloadURL());
+} catch (e) {
+console.error('Test upload failed:', e.code, e.message, e);
+}
+})();
+
+
+
 const restartBtn = document.getElementById('restart-btn');
 const finishBtn = document.getElementById('finish-btn');
 
@@ -316,17 +362,6 @@ async function drawFinalComposite() {
   console.log('Final composite drawn with proper overlap.');
 }
 
-// Helper function to load image asynchronously
-function loadImage(src) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';  // adjust/remove as needed
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error('Failed to load image at ' + src));
-    img.src = src;
-  });
-}
-
 // Show citations list
 function showCitations() {
   const citationsList = document.getElementById('citations-list');
@@ -344,7 +379,7 @@ function showCitations() {
 async function generateQRCodeForFirebaseImage() {
   try {
     // Upload the canvas image to Firebase Storage and get download URL
-    const downloadURL = await uploadCanvasImage(); // your upload function
+    const downloadURL = await uploadCanvasImage();
 
     // Get references to QR code container and related elements
     const qrcodeDiv = document.getElementById('qrcode');
@@ -445,3 +480,9 @@ restartBtn.addEventListener('click', () => {
   ['head', 'body', 'legs'].forEach(updateImage);
   updateHighlight('head');
 });
+
+console.log(firebase.app().options.projectId);
+console.log(firebase.app().options.storageBucket);
+console.log(firebase.app().options.appId);
+console.log(firebase.app().options.measurementId);
+console.log(firebase.app().options.apiKey);
