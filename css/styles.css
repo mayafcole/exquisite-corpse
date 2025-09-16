@@ -136,44 +136,53 @@ body {
   text-align: left;
 }
 
-#action-buttons {
-  display: flex;
-  justify-content: center;       /* horizontally center the group */
-  gap: 20px;                     /* space between buttons */
-  margin: 20px auto 10px auto;   /* spacing above and below */
-  max-width: 400px;              /* optional max width */
+.panel-like-citations {
+display: block;
+margin-top: 20px;
+padding: 10px 20px;
+font-size: 1em;
+color: #555;
+width: 68p0x;
+margin-left: auto;
+margin-right: auto;
+border: 1px solid #ddd;
+text-align: left;
+background: #fff;
 }
-
-#action-buttons button {
-  flex: 1;                      /* buttons share available space equally */
-  padding: 12px;
-  font-size: 1.1em;
-  border-radius: 5px;
-  cursor: pointer;
-  user-select: none;
-  border: none;
-  color: white;
-  transition: background-color 0.3s ease;
+/* Responsive: match your citations behavior */
+@media (max-width: 700px) {
+.panel-like-citations {
+max-width: 100%;
+width: 100%;
+}
 }
 
 #restart-btn {
-  background-color: #f57c00;
+display: none; /* JS sets to 'block' after Finish */
+background-color: #f57c00;
+padding: 12px 24px;
+font-size: 1.1em;
+border-radius: 5px;
+cursor: pointer;
+border: none;
+color: white;
+transition: background-color 0.3s ease;
+width: 75%;
+display: block; 
+margin: 25px auto 0;
 }
-#restart-btn:hover {
-  background-color: #ef6c00;
-}
-
-#generate-qr-btn {
-  background-color: black;
-}
-#generate-qr-btn:hover {
-  background-color: #1976D2;
-}
+#restart-btn:hover { background-color: #ef6c00; }
 
 #qr-container {
-  display: none;
-  text-align: center;
-  margin-top: 15px;
+display: none;
+text-align: center;
+margin-top: 25px;
+}
+
+#qrcode {
+margin: 0 auto;
+width: 180px;
+height: 180px;
 }
 
 #qr-container p {

@@ -377,41 +377,22 @@ function showCitations() {
 }
 
 async function generateQRCodeForFirebaseImage() {
-  try {
-    // Upload the canvas image to Firebase Storage and get download URL
-    const downloadURL = await uploadCanvasImage();
-
-    // Get references to QR code container and related elements
-    const qrcodeDiv = document.getElementById('qrcode');
-    const qrcodeContainer = document.getElementById('qr-container');
-    const downloadLink = document.getElementById('download-link');
-
-    // Clear previous QR code if any
-    qrcodeDiv.innerHTML = '';
-
-    // Generate QR code with the download URL
-    new QRCode(qrcodeDiv, {
-      text: downloadURL,
-      width: 180,
-      height: 180
-    });
-
-    // Update download link href for PNG download
-    downloadLink.href = downloadURL;
-
-    // Show the QR code container
-    qrcodeContainer.style.display = 'block';
-
-  } catch (error) {
-    console.error('Error uploading image or generating QR code:', error);
-    alert('Failed to upload image or generate QR code.');
-  }
-}
-
-// Attach to your generate button
-document.getElementById('generate-qr-btn').addEventListener('click', () => {
-  generateQRCodeForFirebaseImage();
+try {
+const downloadURL = await uploadCanvasImage();
+const qrcodeDiv = document.getElementById('qrcode');
+const qrcodeContainer = document.getElementById('qr-container');
+qrcodeDiv.innerHTML = '';
+new QRCode(qrcodeDiv, {
+text: downloadURL,
+width: 180,
+height: 180
 });
+
+qrcodeContainer.style.display = 'block'; } catch (error) {
+console.error('Error uploading image or generating QR code:', error);
+alert('Failed to upload image or generate QR code.');
+}
+}
 
 // Event listeners
 document.querySelectorAll('.nav-arrow').forEach(button => {
@@ -437,24 +418,27 @@ document.querySelectorAll('.nav-arrow').forEach(button => {
 });
 
 finishBtn.addEventListener('click', async () => {
-  ['head-section', 'body-section', 'legs-section'].forEach(id =>
-    document.getElementById(id).style.display = 'none'
-  );
-  finishBtn.style.display = 'none';
-
-  const finalCanvas = document.getElementById('final-canvas');
-  finalCanvas.style.display = 'block';
-
-  restartBtn.style.display = 'block';
-
-  try {
-    await drawFinalComposite();
-    showCitations();
-    await generateQRCodeForFirebaseImage();
-  } catch(e) {
-    console.error('Error drawing or processing:', e);
-    alert('There was an error generating the final image.');
-  }
+// Hide the three build sections
+['head-section', 'body-section', 'legs-section'].forEach(id => {
+const el = document.getElementById(id);
+if (el) el.style.display = 'none';
+});
+// Hide the builder instructions panel
+const builderInfo = document.getElementById('builder-info');
+if (builderInfo) builderInfo.style.display = 'none';
+// Hide Finish, show canvas and Restart
+finishBtn.style.display = 'none';
+const finalCanvas = document.getElementById('final-canvas');
+if (finalCanvas) finalCanvas.style.display = 'block';
+restartBtn.style.display = 'block';
+try {
+await drawFinalComposite();
+showCitations();
+await generateQRCodeForFirebaseImage();
+} catch (e) {
+console.error('Error drawing or processing:', e);
+alert('There was an error generating the final image.');
+}
 });
 
 restartBtn.addEventListener('click', () => {
@@ -469,6 +453,8 @@ restartBtn.addEventListener('click', () => {
   document.getElementById('qrcode').innerHTML = '';
   document.getElementById('citation-container').style.display = 'none';
   document.getElementById('citations-list').innerHTML = '';
+  document.getElementById('builder-info').style.display = 'block';
+
 
   ['head-section', 'body-section', 'legs-section'].forEach(id =>
     document.getElementById(id).style.display = ''

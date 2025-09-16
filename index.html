@@ -58,24 +58,27 @@
     <button id="finish-btn" disabled>Finish</button>
 
     <div id="final-section">
-      <h2 id="final-heading" style="display:none; text-align:center; margin-top: 20px;"></h2>
-      <canvas id="final-canvas" width="500" height="900" style="display:none;"></canvas>
+    <h2 id="final-heading" style="display:none; text-align:center; margin-top: 20px;"></h2>
+    <canvas id="final-canvas" width="500" height="900" style="display:none;"></canvas>
 
-      <div id="citation-container" style="display:none;">
-        <h4>Citations</h4>
-        <ul id="citations-list"></ul>
-      </div>
+     <div id="builder-info" class="panel-like-citations">
+    <h4>Open Access Week at Dartmouth!</h4>
+    <p>Using public characters, Digital Fellow Maya Cole created this game to promote creativity and collaboration. Create a monster and make a sticker! Stay tuned for more fun library events!</p>
+    </div>
 
-      <div id="action-buttons">
-        <button id="restart-btn">Restart</button>
-        <button id="generate-qr-btn">Generate QR Code</button>
-      </div>
+    <div id="citation-container" style="display:none;">
+    <h4>Citations</h4>
+    <ul id="citations-list"></ul>
+    </div>
 
-      <div id="qr-container" style="display:none; text-align:center; margin-top:15px;">
-        <p>Scan or save your creation!</p>
-        <div id="qrcode"></div>
-        <a id="download-link" href="#" download="exquisite-corpse.png">Download PNG</a>
-      </div>
+    <!-- Keep QR inside final-section so it centers with the rest -->
+    <div id="qr-container" style="display:none; text-align:center; margin-top:15px;">
+    <p>Scan and print out your monster!</p>
+    <div id="qrcode"></div>
+    </div>
+
+    <!-- Restart shows only after Finish -->
+    <button id="restart-btn" style="display:none;">Restart</button> </div>
     </div>
 
   </div>
