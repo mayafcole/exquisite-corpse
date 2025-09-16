@@ -122,7 +122,41 @@ const images = {
       citation: '"Vintage Beistle Jack-O-Lantern sad face" by riptheskull is licensed under CC BY-ND 2.0.',
       overlapsWithNext: false,
       title: 'Sad Jack-O-Lantern'
-    }
+    },
+    {
+      url: 'gallery/head/smaller_heads/mickmouse.png',
+      citation: '"Mickey Mouse Button" by Sam Howzit is licensed under CC BY 2.0.',
+      overlapsWithNext: false,
+      title: 'Mickey Mouse'
+    },
+    {
+      url: 'gallery/head/smaller_heads/red_queen.png',
+      citation: '"LIVING DEAD DOLLS Alice In Wonderland : Inferno as The Red Queen" by minowa*naitoh is licensed under CC BY-NC-ND 2.0.',
+      overlapsWithNext: false,
+      title: 'Red Queen'
+    },
+    {
+      url: 'gallery/head/smaller_heads/raven.png',
+      citation: '"The Crow" by cheddar- is licensed under CC BY-SA 2.0.',
+      overlapsWithNext: false,
+      title: 'Raven'
+    },
+    {
+      url: 'gallery/head/smaller_heads/orca_skull.png',
+      citation: '"Orcinus orca - killer whale skull - Smithsonian Museum of Natural History - 2012-05-17" by Tim Evanson is licensed under CC BY-SA 2.0.',
+      overlapsWithNext: false,
+      title: 'Orca Skull'
+    },{
+      url: 'gallery/head/smaller_heads/snowman_head.png',
+      citation: '"Snowman Neighbor" by MGShelton is licensed under CC BY-NC 2.0.',
+      overlapsWithNext: false,
+      title: 'Snowman'
+    },{
+      url: 'gallery/head/smaller_heads/tennis_player_head.png',
+      citation: '"Tennis Player Sculpture, Thames Costal Walkway" by russellstreet is licensed under CC BY-SA 2.0.',
+      overlapsWithNext: false,
+      title: 'Tennis Player'
+    },
   ],
   body: [
     {
@@ -158,8 +192,20 @@ const images = {
     {
       url: 'gallery/body/smaller_bodies/snowman.png',
       citation: '"Snowman Neighbor" by MGShelton is licensed under CC BY-NC 2.0.',
-      overlapsWithNext: false,
+      overlapsWithNext: true,
       title: 'Snowman'
+    },
+    {
+      url: 'gallery/body/smaller_bodies/knight.png',
+      citation: '"Prowess, Honor, Medieval." by kstepanoff is licensed under CC BY 2.0.',
+      overlapsWithNext: false,
+      title: 'Knight'
+    },
+    {
+      url: 'gallery/body/smaller_bodies/ironman.png',
+      citation: '"Iron Man 3" by IQRemix is licensed under CC BY-SA 2.0.',
+      overlapsWithNext: true,
+      title: 'Iron Man'
     }
   ],
   legs: [
@@ -170,7 +216,7 @@ const images = {
       title: 'Ballerina'
     },
     {
-      url: 'gallery/legs/3.png',
+      url: 'gallery/legs/better_oct.png',
       citation: '"Pinnoctopus cordiformis, Common octopus" by brian.gratwicke is licensed under CC BY 2.0.',
       overlapsWithNext: false,
       title: 'Octopus'
@@ -184,7 +230,7 @@ const images = {
     {
       url: 'gallery/legs/5.png',
       citation: '"Flamingos\' heart" by Omar.Bariffi is licensed under CC BY 2.0.',
-      overlapsWithNext: false,
+      overlapsWithNext: true,
       title: 'Flamingo'
     },
     {
@@ -192,6 +238,18 @@ const images = {
       citation: '"CLOWN!" by The Glass Beehive* is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false,
       title: 'Clown'
+    },
+    {
+      url: 'gallery/legs/doll_legs.png',
+      citation: '"Sindy in a 60s style wedding dress" by SpeckledOwl is licensed under CC BY-SA 2.0.',
+      overlapsWithNext: false,
+      title: 'Doll'
+    },
+    {
+      url: 'gallery/legs/chuck_e_cheese.png',
+      citation: '"Chuck E. Cheese in Studio C Beta" by SchuminWeb is licensed under CC BY-SA 2.0.',
+      overlapsWithNext: false,
+      title: 'Chuck E. Cheese'
     }
   ]
 };
