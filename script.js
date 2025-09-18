@@ -60,6 +60,7 @@ const images = {
       url: 'gallery/head/smaller_heads/Skull.png',
       citation: '"Magnera Human Skull 2" by L.C.Nøttaasen is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Skull'
 
     },
@@ -67,94 +68,110 @@ const images = {
       url: 'gallery/head/smaller_heads/female_vampire.png',
       citation: '"Vampire" by Carniphage is licensed under CC BY 2.0.',
       overlapsWithNext: true,
+      overlapsBody: true,
       title: 'Vampire'
     },
     {
       url: 'gallery/head/smaller_heads/werewolf.png',
       citation: '"Werewolf (Harry Potter)" by Robert Clarke is licensed under CC BY 2.0.',
       overlapsWithNext: true,
+      overlapsBody: true,
       title: 'Werewolf'
     },
     {
       url: 'gallery/head/smaller_heads/Frankenstein.png',
       citation: '"Frankenstein" by twm1340 is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Frankenstein'
     },
      {
       url: 'gallery/head/smaller_heads/snake_head.png',
       citation: '"Snake Head" by Skrewtape is licensed under CC BY-SA 2.0.',
       overlapsWithNext: true,
+      overlapsBody: true,
       title: 'Snake'
     },
     {
       url: 'gallery/head/smaller_heads/egg.png',
       citation: '"Oxyura leucocephala MHNT.ZOO.2010.11.11.3" by Roger Culos is licensed under CC BY-SA 4.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Egghead'
     },
     {
       url: 'gallery/head/smaller_heads/hello_kitty.png',
       citation: '"Pop! Sanrio" by pullip_junk is licensed under CC BY-NC-ND 2.0.',
       overlapsWithNext: true,
+      overlapsBody: true,
       title: 'Hello Kitty'
     },
     {
       url: 'gallery/head/smaller_heads/lego_head.png',
       citation: '"終於入手 LEGO Head  !!" by Super Flow 非常流暢 is licensed under CC BY-NC-ND 2.0.',
       overlapsWithNext: true,
+      overlapsBody: true,
       title: 'LEGO Head'
     },
     {
       url: 'gallery/head/smaller_heads/robot.png',
       citation: '"Friendly Robot" by firepile is licensed under CC BY 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Robot'
     },
     {
       url: 'gallery/head/smaller_heads/skull_w_glasses.png',
       citation: '"Cheap Sunglasses" by erix! is licensed under CC BY 2.0.',
       overlapsWithNext: true,
+      overlapsBody: true,
       title: 'Cool Skull'
     },
     {
       url: 'gallery/head/smaller_heads/sad_pumpkin.png',
       citation: '"Vintage Beistle Jack-O-Lantern sad face" by riptheskull is licensed under CC BY-ND 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Sad Jack-O-Lantern'
     },
     {
       url: 'gallery/head/smaller_heads/mickmouse.png',
       citation: '"Mickey Mouse Button" by Sam Howzit is licensed under CC BY 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Mickey Mouse'
     },
     {
       url: 'gallery/head/smaller_heads/red_queen.png',
       citation: '"LIVING DEAD DOLLS Alice In Wonderland : Inferno as The Red Queen" by minowa*naitoh is licensed under CC BY-NC-ND 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Red Queen'
     },
     {
       url: 'gallery/head/smaller_heads/raven.png',
       citation: '"The Crow" by cheddar- is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Raven'
     },
     {
       url: 'gallery/head/smaller_heads/orca_skull.png',
       citation: '"Orcinus orca - killer whale skull - Smithsonian Museum of Natural History - 2012-05-17" by Tim Evanson is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Orca Skull'
     },{
       url: 'gallery/head/smaller_heads/snowman_head.png',
       citation: '"Snowman Neighbor" by MGShelton is licensed under CC BY-NC 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Snowman'
     },{
       url: 'gallery/head/smaller_heads/tennis_player_head.png',
       citation: '"Tennis Player Sculpture, Thames Costal Walkway" by russellstreet is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false,
+      overlapsBody: false,
       title: 'Tennis Player'
     },
   ],
@@ -163,48 +180,57 @@ const images = {
       url: 'gallery/body/smaller_bodies/astronaut.png',
       citation: '"astronaut" by Oregon State University is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false,
+            overlapsWithHead: false,
+      overlapsLegs: false,
       title: 'Astronaut'
     },
     {
       url: 'gallery/body/smaller_bodies/tuxedo.png',
       citation: '"Thick as Thieves tuxedo, Kent Wang marcella shirt" by Kent Wang is licensed under CC BY-SA 2.0.',
       overlapsWithNext: true,
+      overlapsLegs: true,
       title: 'Spy'
     },
     {
       url: 'gallery/body/smaller_bodies/magician.png',
       citation: '"The Headless Magician" by Double--M is licensed under CC BY 2.0.',
       overlapsWithNext: false,
+      overlapsLegs: false,
       title: 'Magician'
     },
      {
       url: 'gallery/body/smaller_bodies/king_penguin.png',
       citation: '"King Penguin Couple" by D-Stanley is licensed under CC BY 2.0.',
       overlapsWithNext: true,
+      overlapsLegs: true,
       title: 'Penguin'
     },
     {
       url: 'gallery/body/smaller_bodies/tennis_player.png',
       citation: '"Tennis Player Sculpture, Thames Costal Walkway" by russellstreet is licensed under CC BY-SA 2.0.',
       overlapsWithNext: false,
+      overlapsLegs: false,
       title: 'Tennis Player'
     },
     {
       url: 'gallery/body/smaller_bodies/snowman.png',
       citation: '"Snowman Neighbor" by MGShelton is licensed under CC BY-NC 2.0.',
       overlapsWithNext: true,
+      overlapsLegs: true,
       title: 'Snowman'
     },
     {
       url: 'gallery/body/smaller_bodies/knight.png',
       citation: '"Prowess, Honor, Medieval." by kstepanoff is licensed under CC BY 2.0.',
       overlapsWithNext: false,
+      overlapsLegs: false,
       title: 'Knight'
     },
     {
       url: 'gallery/body/smaller_bodies/ironman.png',
       citation: '"Iron Man 3" by IQRemix is licensed under CC BY-SA 2.0.',
       overlapsWithNext: true,
+      overlapsLegs: true,
       title: 'Iron Man'
     }
   ],
